@@ -16,7 +16,8 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 8. Dump Second Tidy data set into file name which is provided as parameter of analyzeMobileData function.
 
 
-*Further reference: 
+Further reference: 
+
 1.analyzeMobileData will take two parameter: dir which needs home path where features.txt file located, fname which is file name for Second Tidy Data set which will be stored in homepath
 
 2.Step 1 will read the files based on the fixed file format method with length of 16 x 561 for x_train and x_test variables .

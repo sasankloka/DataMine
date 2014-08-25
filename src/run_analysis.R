@@ -6,56 +6,43 @@ funtion analyzeMobileData(dir="/Users/Loka/Bigdata/Course/UCI HAR Dataset",fName
   fw<- function(x){ switch(x, "1"= "WALKING", "2"="WALKING_UPSTAIRS","3"="WALKING_DOWNSTAIRS","4"="SITTING","5"="STANDING","6"="LAYING") }
   
   
-  # Load all the files into data.fram varilable
+# Load all the files into data.frame varilable from train and test folders into respected variables,
 features<-read.table("features.txt")
 
 x_train<-read.fwf("./train/X_train.txt",widths=rep(16,561)) 
-colnames(x_train)<-features[,2]
 y_train<-read.table("./train/y_train.txt") 
-colnames(y_train)<-c("Activity")
-y_train<-apply(y_train,1,fw)
 sub_train<-read.table("./train/subject_train.txt")
-colnames(sub_train)<-c("Subject")
-#train_set<-cbind(sub_train,y_train,x_train)
-
-train_set<-cbind(sub_train,y_train,x_train[,grep("MEAN",toupper(colnames(x_train)))])
 
 x_test<-read.fwf("./test/X_test.txt",widths=rep(16,561)) 
-colnames(x_test)<-features[,2]
 y_test<-read.table("./test/y_test.txt") 
-colnames(y_test)<-c("Activity")
-y_test<-apply(y_train,1,fw)
 sub_test<-read.table("./test/subject_test.txt")
+
+#Label the column names using the features list.
+colnames(x_train)<-features[,2]
+colnames(x_test)<-features[,2]
+
+
+#Label the column names to Subject and Activity
+colnames(sub_train)<-c("Subject")
+colnames(y_train)<-c("Activity")
+colnames(y_test)<-c("Activity")
 colnames(sub_test)<-c("Subject")
 
-test_set<-cbind(sub_test,y_test,x_test[,grep("MEAN",toupper(colnames(x_test)))])
 
-#test_set<-cbind(sub_test,y_test,x_test)
+# Using Apply change the Activity value to descriptive activity names.
+y_train<-apply(y_train,1,fw)
+y_test<-apply(y_train,1,fw)
 
+#Prepare Training and Test Sets with joining Subject and Activities
+train_set<-cbind(sub_train,y_train,x_train[,grep("MEAN|STD",toupper(colnames(x_train)))])
+test_set<-cbind(sub_test,y_test,x_test[,grep("MEAN|STD",toupper(colnames(x_test)))])
+
+
+#Merge the training and the test sets to create one tidy data set.
 tidy_set<-rbind(test_set,train_set)
 
-
+# Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 tidy_set2<-aggregate(tidy_set[,3:55],by=list(groupBySubject=tidy_set$Subject,groupByActivity=tidy_set$Activity),FUN=mean )
 
+# Write the second tidy data set to given file name.
 write.table(tidy_set2,file=fname,row.names=FALSE)
-
-lst<-grep("MEAN",toupper(features[,2]))
-
-lst<-grep("MEAN",toupper(colnames(tidy_set)))
-
-tidy_set2<-aggregate(cbind(grep("MEAN",toupper(tidy_set[,2])))~Subject+Activity, tidy_set, mean)
-
-x_merge<-rbind(x_test,x_train)
-flist<-read.table("./features.txt")
-colnames(x_merge)<-flist[,2]
-
-
-head(apply(bgx_train,1,mean),1)
-head(apply(bgx_train,1,sd),1)
-head(cbind(sub_train,apply(bgx_train,1,sd),),2000)
-xf<-cbind(sub_train,apply(bgx_train,1,sd),apply(bgx_train,1,mean))
-colnames(xf)<-c("SubjectNo","bgx_train_msd","bgx_train_mean")
-
-
-
-

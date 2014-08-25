@@ -32,7 +32,4 @@ This tidy dataset will be written to a tab-delimited file given in the function 
 About the Code Book
 -------------------
 The CodeBook.md file explains the transformations performed and the resulting data and variables.
-<<<<<<< HEAD
 
-=======
->>>>>>> 394e958ebe948c9b44bb1cae38f88f3ca1491422

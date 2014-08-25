@@ -14,11 +14,11 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 5. Prepare Train set by combining all the columns which have *mean* + Subject + Activity of all the data frames based on *_train.
 6. Merge the Test and Train sets by combing all the rows for data sets into Tidy data set.
 7. Finally, aggregate the Tidy data set with group by Subject and Activity into Second Tidy data set
-8. Dump Second Tidy data set into file name which is provided as parameter of analyzeMobileData function.
+8. Dump Second Tidy data set into a file name which is provided as parameter of analyzeMobileData function.
 
 
 Further reference: 
-analyzeMobileData will take two parameter: dir which needs home path where features.txt file located, fname which is file name for Second Tidy Data set which will be stored in homepath
+analyzeMobileData will take two parameter: dir which needs home path where features.txt file located, fname which is q file name for Second Tidy Data set which will be stored in homepath
 
 Step 1 will read the files based on the fixed file format method with length of 16 x 561 for x_train and x_test variables .
 
